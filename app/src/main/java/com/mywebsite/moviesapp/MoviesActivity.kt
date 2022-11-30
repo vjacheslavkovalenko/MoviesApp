@@ -1,5 +1,6 @@
 package com.mywebsite.moviesapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -35,11 +36,11 @@ class MoviesActivity : AppCompatActivity() {
         val apiInterface = ApiInterface.create().getMovies()
 
         //apiInterface.enqueue( Callback<List<Movie>>())
-        apiInterface.enqueue( object : Callback<Movies> {
+        apiInterface.enqueue( object : Callback<Movies>, CustomAdapter.ItemClickListener {
             override fun onResponse(call: Call<Movies>?, response: Response<Movies>?) {
                 Log.d("testLogs", "onResponse Success ${response?.body()?.films}")
                 // This will pass the ArrayList to our Adapter
-                val adapter = CustomAdapter(response?.body()?.films)
+                val adapter = CustomAdapter(response?.body()?.films,this )
 
                 // Setting the Adapter with the recyclerview
                 recyclerview.adapter = adapter
@@ -50,6 +51,12 @@ class MoviesActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<Movies>?, t: Throwable?) {
                 Log.d("testLogs", "onFailure : ${t?.message}")
+            }
+
+            override fun onItemClick(filmId: Int) {
+                val intent = Intent(this@MoviesActivity, MoviesDetailsActivity::class.java)
+                intent.putExtra("filmId", filmId)
+                startActivity(intent)
             }
         })
 

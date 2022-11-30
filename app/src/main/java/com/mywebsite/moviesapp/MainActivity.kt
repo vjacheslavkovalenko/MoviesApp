@@ -27,19 +27,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val intentToAnotherScreen = Intent( this, MoviesActivity::class.java)
-        startActivity(intentToAnotherScreen)
 
-//        database = Firebase.database.reference
-//
-//        val providers = arrayListOf(
-//            AuthUI.IdpConfig.EmailBuilder().build())
-//
-//        val signInIntent = AuthUI.getInstance()
-//            .createSignInIntentBuilder()
-//            .setAvailableProviders(providers)
-//            .build()
-//        signInLauncher.launch(signInIntent)
+        database = Firebase.database.reference
+
+        val providers = arrayListOf(
+            AuthUI.IdpConfig.EmailBuilder().build())
+
+        val signInIntent = AuthUI.getInstance()
+            .createSignInIntentBuilder()
+            .setAvailableProviders(providers)
+            .build()
+        signInLauncher.launch(signInIntent)
 
     }
 
